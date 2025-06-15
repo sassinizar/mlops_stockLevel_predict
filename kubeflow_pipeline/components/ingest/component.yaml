@@ -1,0 +1,28 @@
+name: Ingest Data
+description: Download stock data from MinIO
+inputs:
+  - name: bucket
+    type: String
+  - name: object_name
+    type: String
+  - name: endpoint
+    type: String
+  - name: access_key
+    type: String
+  - name: secret_key
+    type: String
+outputs:
+  - name: output_path
+    type: String
+implementation:
+  container:
+    image: gcr.io/YOUR_PROJECT_ID/stock-pipeline:latest
+    command: [
+      "python", "src/ingest.py",
+      "--bucket", {inputValue: bucket},
+      "--object_name", {inputValue: object_name},
+      "--endpoint", {inputValue: endpoint},
+      "--access_key", {inputValue: access_key},
+      "--secret_key", {inputValue: secret_key},
+      "--output_path", {outputPath: output_path}
+    ]

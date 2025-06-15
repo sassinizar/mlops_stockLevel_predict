@@ -1,0 +1,16 @@
+name: Train Model
+description: Train an XGBoost model using preprocessed data
+inputs:
+  - name: input_path
+    type: String
+outputs:
+  - name: model_output_path
+    type: String
+implementation:
+  container:
+    image: gcr.io/YOUR_PROJECT_ID/stock-pipeline:latest
+    command: [
+      "python", "src/train.py",
+      "--input_path", {inputValue: input_path},
+      "--model_output_path", {outputPath: model_output_path}
+    ]
